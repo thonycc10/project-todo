@@ -4,7 +4,9 @@ import {todoList} from "../index";
 
 const divTodoList = document.querySelector('.todo-list');
 const txtInput = document.querySelector('.new-todo');
-
+const buttonClear = document.querySelector('.clear-completed');
+const ulFilter = document.querySelector('.filters');
+const afiltro = document.querySelectorAll('.filtro');
 
 export const crearTodoHtml = (todo) => {
     const htmlTodo = `
@@ -49,7 +51,44 @@ divTodoList.addEventListener('click', (event) => {
     if (nombreElemento.includes('input')) {
         todoList.marcarCompletado(todoId);
         todoElemento.classList.toggle('completed');
+    } else if (nombreElemento.includes('button')) {
+        todoList.eliminarTodo(todoId);
+        divTodoList.removeChild(todoElemento);
     }
 
-    console.log(todoList);
+});
+
+buttonClear.addEventListener('click', (event) => {
+    todoList.eliminarCompletado();
+    // importante por si tienes que eliminar interno.. comenzar desde el ultimo
+    for (let i = divTodoList.children.length-1; i >= 0; i--) {
+        const elements = divTodoList.children[i];
+        if (elements.classList.contains('completed')) {
+            divTodoList.removeChild(elements);
+        }
+    }
+});
+
+ulFilter.addEventListener('click', (event) => {
+    const filtro = event.target.text;
+    if (!filtro) return;
+    afiltro.forEach(elem => elem.classList.remove('selected'));
+    event.target.classList.add('selected');
+    for (const element of divTodoList.children ) {
+        element.classList.remove('hidden');
+        const completado = element.classList.contains('completed');
+
+        switch (filtro) {
+            case 'Pendientes':
+                if (completado) {
+                    element.classList.add('hidden');
+                }
+                break;
+            case 'Completados':
+                if (!completado) {
+                    element.classList.add('hidden');
+                }
+                break;
+        }
+    }
 });

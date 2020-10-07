@@ -1,5 +1,14 @@
 export class TodoClass {
 
+    static fromJsom({id, tarea, completado, creado}) {
+        const tempTodo = new TodoClass( tarea );
+        tempTodo.id         = id;
+        tempTodo.completado = completado;
+        tempTodo.creado     = creado;
+
+        return tempTodo;
+    }
+
     constructor(tarea) {
         this.tarea = tarea;
         this.id = new Date().getTime();
