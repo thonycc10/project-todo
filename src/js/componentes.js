@@ -7,6 +7,7 @@ const txtInput = document.querySelector('.new-todo');
 const buttonClear = document.querySelector('.clear-completed');
 const ulFilter = document.querySelector('.filters');
 const afiltro = document.querySelectorAll('.filtro');
+const countPendientes = document.querySelector('.todo-count');
 
 export const crearTodoHtml = (todo) => {
     const htmlTodo = `
@@ -27,6 +28,9 @@ export const crearTodoHtml = (todo) => {
 
     return div.firstElementChild;
 }
+export const totalPendientes = () => {
+    countPendientes.children[0].innerText = todoList.countPendientes();
+}
 
 txtInput.addEventListener('keyup', (event) => {
     // keycode -> te enseña el codigo de la tecla a presionar enter es 13
@@ -37,6 +41,7 @@ txtInput.addEventListener('keyup', (event) => {
         todoList.nuevoTodo(nuevoTodo);
         crearTodoHtml(nuevoTodo);
         txtInput.value = '';
+        totalPendientes();
         console.log({todoList})
     }
 });
@@ -51,9 +56,11 @@ divTodoList.addEventListener('click', (event) => {
     if (nombreElemento.includes('input')) {
         todoList.marcarCompletado(todoId);
         todoElemento.classList.toggle('completed');
+        totalPendientes();
     } else if (nombreElemento.includes('button')) {
         todoList.eliminarTodo(todoId);
         divTodoList.removeChild(todoElemento);
+        totalPendientes();
     }
 
 });
@@ -65,6 +72,7 @@ buttonClear.addEventListener('click', (event) => {
         const elements = divTodoList.children[i];
         if (elements.classList.contains('completed')) {
             divTodoList.removeChild(elements);
+            totalPendientes();
         }
     }
 });
@@ -90,5 +98,6 @@ ulFilter.addEventListener('click', (event) => {
                 }
                 break;
         }
+        totalPendientes();
     }
 });

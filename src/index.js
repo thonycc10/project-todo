@@ -1,10 +1,12 @@
 import './styles.css';
 import {TodoClass, TodoListClass} from "./class";
-import {crearTodoHtml} from "./js/componentes";
+import {crearTodoHtml, totalPendientes} from "./js/componentes";
 
 export const todoList = new TodoListClass();
 // todoList.todos.forEach( todo => crearTodoHtml(todo)); o hacer el otro son iguales
 todoList.todos.forEach( crearTodoHtml );
+totalPendientes();
+
 console.log(todoList.todos);
 // const tarea = new TodoClass('Aprender JS');
 //
