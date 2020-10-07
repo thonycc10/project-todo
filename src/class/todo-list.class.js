@@ -36,7 +36,7 @@ export class TodoListClass {
     }
 
     cargarLocalStorage() {
-        this.todos = localStorage.getItem('todo') ? JSON.parse(localStorage.getItem('todo')) : his.todos = [];
+        this.todos = localStorage.getItem('todo') ? JSON.parse(localStorage.getItem('todo')) : this.todos = [];
         this.todos = this.todos.map( TodoClass.fromJsom );
     }
 }
